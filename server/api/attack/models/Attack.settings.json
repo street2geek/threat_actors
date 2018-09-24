@@ -1,0 +1,27 @@
+{
+  "connection": "default",
+  "collectionName": "attack",
+  "info": {
+    "name": "attack",
+    "description": "Threat actor attack types"
+  },
+  "options": {
+    "timestamps": true
+  },
+  "attributes": {
+    "Name": {
+      "default": "",
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "Description": {
+      "default": "",
+      "type": "text"
+    },
+    "threatactor": {
+      "model": "threatactor",
+      "via": "attacks"
+    }
+  }
+}
