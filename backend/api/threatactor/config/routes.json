@@ -2,48 +2,48 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/attack",
-      "handler": "Attack.find",
+      "path": "/threatactor",
+      "handler": "Threatactor.find",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/attack/count",
-      "handler": "Attack.count",
+      "path": "/threatactor/count",
+      "handler": "Threatactor.count",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/attack/:_id",
-      "handler": "Attack.findOne",
+      "path": "/threatactor/:_id",
+      "handler": "Threatactor.findOne",
       "config": {
         "policies": []
       }
     },
     {
       "method": "POST",
-      "path": "/attack",
-      "handler": "Attack.create",
+      "path": "/threatactor",
+      "handler": "Threatactor.create",
       "config": {
         "policies": []
       }
     },
     {
       "method": "PUT",
-      "path": "/attack/:_id",
-      "handler": "Attack.update",
+      "path": "/threatactor/:_id",
+      "handler": "Threatactor.update",
       "config": {
         "policies": []
       }
     },
     {
       "method": "DELETE",
-      "path": "/attack/:_id",
-      "handler": "Attack.destroy",
+      "path": "/threatactor/:_id",
+      "handler": "Threatactor.destroy",
       "config": {
         "policies": []
       }

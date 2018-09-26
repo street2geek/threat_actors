@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Lifecycle callbacks for the `Attack` model.
+ * Lifecycle callbacks for the `Attackpattern` model.
  */
 
 module.exports = {

@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Attack.js service
+ * Attackpattern.js service
  *
  * @description: A set of functions similar to controller's actions to avoid code duplication.
  */
@@ -12,21 +12,21 @@ const _ = require('lodash');
 module.exports = {
 
   /**
-   * Promise to fetch all attacks.
+   * Promise to fetch all attackpatterns.
    *
    * @return {Promise}
    */
 
   fetchAll: (params) => {
     // Convert `params` object to filters compatible with Mongo.
-    const filters = strapi.utils.models.convertParams('attack', params);
+    const filters = strapi.utils.models.convertParams('attackpattern', params);
     // Select field to populate.
-    const populate = Attack.associations
+    const populate = Attackpattern.associations
       .filter(ast => ast.autoPopulate !== false)
       .map(ast => ast.alias)
       .join(' ');
 
-    return Attack
+    return Attackpattern
       .find()
       .where(filters.where)
       .sort(filters.sort)
@@ -36,90 +36,90 @@ module.exports = {
   },
 
   /**
-   * Promise to fetch a/an attack.
+   * Promise to fetch a/an attackpattern.
    *
    * @return {Promise}
    */
 
   fetch: (params) => {
     // Select field to populate.
-    const populate = Attack.associations
+    const populate = Attackpattern.associations
       .filter(ast => ast.autoPopulate !== false)
       .map(ast => ast.alias)
       .join(' ');
 
-    return Attack
-      .findOne(_.pick(params, _.keys(Attack.schema.paths)))
+    return Attackpattern
+      .findOne(_.pick(params, _.keys(Attackpattern.schema.paths)))
       .populate(populate);
   },
 
   /**
-   * Promise to count attacks.
+   * Promise to count attackpatterns.
    *
    * @return {Promise}
    */
 
   count: (params) => {
     // Convert `params` object to filters compatible with Mongo.
-    const filters = strapi.utils.models.convertParams('attack', params);
+    const filters = strapi.utils.models.convertParams('attackpattern', params);
 
-    return Attack
+    return Attackpattern
       .count()
       .where(filters.where);
   },
 
   /**
-   * Promise to add a/an attack.
+   * Promise to add a/an attackpattern.
    *
    * @return {Promise}
    */
 
   add: async (values) => {
     // Extract values related to relational data.
-    const relations = _.pick(values, Attack.associations.map(ast => ast.alias));
-    const data = _.omit(values, Attack.associations.map(ast => ast.alias));
+    const relations = _.pick(values, Attackpattern.associations.map(ast => ast.alias));
+    const data = _.omit(values, Attackpattern.associations.map(ast => ast.alias));
 
     // Create entry with no-relational data.
-    const entry = await Attack.create(data);
+    const entry = await Attackpattern.create(data);
 
     // Create relational data and return the entry.
-    return Attack.updateRelations({ _id: entry.id, values: relations });
+    return Attackpattern.updateRelations({ _id: entry.id, values: relations });
   },
 
   /**
-   * Promise to edit a/an attack.
+   * Promise to edit a/an attackpattern.
    *
    * @return {Promise}
    */
 
   edit: async (params, values) => {
     // Extract values related to relational data.
-    const relations = _.pick(values, Attack.associations.map(a => a.alias));
-    const data = _.omit(values, Attack.associations.map(a => a.alias));
+    const relations = _.pick(values, Attackpattern.associations.map(a => a.alias));
+    const data = _.omit(values, Attackpattern.associations.map(a => a.alias));
 
     // Update entry with no-relational data.
-    const entry = await Attack.update(params, data, { multi: true });
+    const entry = await Attackpattern.update(params, data, { multi: true });
 
     // Update relational data and return the entry.
-    return Attack.updateRelations(Object.assign(params, { values: relations }));
+    return Attackpattern.updateRelations(Object.assign(params, { values: relations }));
   },
 
   /**
-   * Promise to remove a/an attack.
+   * Promise to remove a/an attackpattern.
    *
    * @return {Promise}
    */
 
   remove: async params => {
     // Select field to populate.
-    const populate = Attack.associations
+    const populate = Attackpattern.associations
       .filter(ast => ast.autoPopulate !== false)
       .map(ast => ast.alias)
       .join(' ');
 
     // Note: To get the full response of Mongo, use the `remove()` method
     // or add spent the parameter `{ passRawResult: true }` as second argument.
-    const data = await Attack
+    const data = await Attackpattern
       .findOneAndRemove(params, {})
       .populate(populate);
 
@@ -128,7 +128,7 @@ module.exports = {
     }
 
     await Promise.all(
-      Attack.associations.map(async association => {
+      Attackpattern.associations.map(async association => {
         const search = _.endsWith(association.nature, 'One') || association.nature === 'oneToMany' ? { [association.via]: data._id } : { [association.via]: { $in: [data._id] } };
         const update = _.endsWith(association.nature, 'One') || association.nature === 'oneToMany' ? { [association.via]: null } : { $pull: { [association.via]: data._id } };
 
@@ -145,22 +145,22 @@ module.exports = {
   },
 
   /**
-   * Promise to search a/an attack.
+   * Promise to search a/an attackpattern.
    *
    * @return {Promise}
    */
 
   search: async (params) => {
     // Convert `params` object to filters compatible with Mongo.
-    const filters = strapi.utils.models.convertParams('attack', params);
+    const filters = strapi.utils.models.convertParams('attackpattern', params);
     // Select field to populate.
-    const populate = Attack.associations
+    const populate = Attackpattern.associations
       .filter(ast => ast.autoPopulate !== false)
       .map(ast => ast.alias)
       .join(' ');
 
-    const $or = Object.keys(Attack.attributes).reduce((acc, curr) => {
-      switch (Attack.attributes[curr].type) {
+    const $or = Object.keys(Attackpattern.attributes).reduce((acc, curr) => {
+      switch (Attackpattern.attributes[curr].type) {
         case 'integer':
         case 'float':
         case 'decimal':
@@ -184,7 +184,7 @@ module.exports = {
       }
     }, []);
 
-    return Attack
+    return Attackpattern
       .find({ $or })
       .sort(filters.sort)
       .skip(filters.start)

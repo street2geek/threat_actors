@@ -2,7 +2,7 @@
   "connection": "default",
   "collectionName": "threatactor",
   "info": {
-    "name": "threatactor",
+    "name": "threatActor",
     "description": "Threat actor details"
   },
   "options": {
@@ -21,8 +21,9 @@
       "required": true
     },
     "attacks": {
-      "collection": "attack",
-      "via": "threatactor"
+      "collection": "attackpattern",
+      "via": "threatactor",
+      "columnName": ""
     }
   }
 }

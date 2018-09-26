@@ -2,7 +2,7 @@
   "connection": "default",
   "collectionName": "attack",
   "info": {
-    "name": "attack",
+    "name": "attackPattern",
     "description": "Threat actor attack types"
   },
   "options": {
