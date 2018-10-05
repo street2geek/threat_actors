@@ -1,5 +1,5 @@
 {
-  "name": "threat_actors",
+  "name": "backend",
   "private": true,
   "version": "0.1.0",
   "description": "A Strapi application.",
@@ -37,7 +37,7 @@
   ],
   "strapi": {
     "packageManager": "npm",
-    "uuid": "c7b16413-12b1-4bf7-9c66-1dddc30829a3"
+    "uuid": "65802177-27a8-4be0-893b-e4b09759cd90"
   },
   "engines": {
     "node": ">= 9.0.0",

@@ -2,7 +2,7 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/threatactor",
+      "path": "/threatactors",
       "handler": "Threatactor.find",
       "config": {
         "policies": []
@@ -10,7 +10,7 @@
     },
     {
       "method": "GET",
-      "path": "/threatactor/count",
+      "path": "/threatactors/count",
       "handler": "Threatactor.count",
       "config": {
         "policies": []
@@ -18,7 +18,7 @@
     },
     {
       "method": "GET",
-      "path": "/threatactor/:_id",
+      "path": "/threatactors/:_id",
       "handler": "Threatactor.findOne",
       "config": {
         "policies": []
@@ -26,7 +26,7 @@
     },
     {
       "method": "POST",
-      "path": "/threatactor",
+      "path": "/threatactors",
       "handler": "Threatactor.create",
       "config": {
         "policies": []
@@ -34,7 +34,7 @@
     },
     {
       "method": "PUT",
-      "path": "/threatactor/:_id",
+      "path": "/threatactors/:_id",
       "handler": "Threatactor.update",
       "config": {
         "policies": []
@@ -42,7 +42,7 @@
     },
     {
       "method": "DELETE",
-      "path": "/threatactor/:_id",
+      "path": "/threatactors/:_id",
       "handler": "Threatactor.destroy",
       "config": {
         "policies": []

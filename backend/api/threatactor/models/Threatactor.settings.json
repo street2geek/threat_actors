@@ -2,28 +2,47 @@
   "connection": "default",
   "collectionName": "threatactor",
   "info": {
-    "name": "threatActor",
-    "description": "Threat actor details"
+    "name": "threatactor",
+    "description": ""
   },
   "options": {
     "timestamps": true
   },
   "attributes": {
-    "Description": {
+    "Name": {
+      "default": "",
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "Threat Summary": {
       "default": "",
       "type": "text",
       "required": true
     },
-    "Name": {
+    "Severity": {
       "default": "",
-      "unique": true,
-      "type": "string",
-      "required": true
+      "type": "text"
     },
-    "attacks": {
-      "collection": "attackpattern",
-      "via": "threatactor",
-      "columnName": ""
+    "Goal Orientation": {
+      "default": "",
+      "type": "text"
+    },
+    "Target": {
+      "default": "",
+      "type": "text"
+    },
+    "Capability": {
+      "default": "",
+      "type": "text"
+    },
+    "Modus Operandi": {
+      "default": "",
+      "type": "text"
+    },
+    "Main Activity's": {
+      "default": "",
+      "type": "text"
     }
   }
 }
