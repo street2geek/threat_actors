@@ -29,7 +29,7 @@
 
 <script>
 import Sidebar from "./dashboard-sidebar";
-import { ALL_ACTORS_QUERY } from '@/graphql'
+import { ALL_ACTORS_QUERY } from "@/graphql";
 
 export default {
   name: "dashboard",
@@ -38,14 +38,16 @@ export default {
   },
   data: () => {
     return {
-      data: [],
       threatactors: []
     };
+  },
+  methods: {
+    summary(name) {},
+    severity(name) {}
   },
   /*created() {
     this.$http.get("http://localhost:1337/threatactors").then(
       response => {
-        this.data = response.data;
         this.threatactors = this.data.map(d => d.name);
       },
       error => {
