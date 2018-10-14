@@ -9,39 +9,29 @@
     "timestamps": true
   },
   "attributes": {
-    "Name": {
-      "default": "",
-      "type": "string",
-      "required": true,
-      "unique": true
+    "name": {
+      "type": "string"
     },
-    "Threat Summary": {
-      "default": "",
+    "summary": {
       "type": "text",
       "required": true
     },
-    "Severity": {
-      "default": "",
+    "severity": {
       "type": "text"
     },
-    "Goal Orientation": {
-      "default": "",
+    "orientation": {
       "type": "text"
     },
-    "Target": {
-      "default": "",
+    "target": {
       "type": "text"
     },
-    "Capability": {
-      "default": "",
+    "capability": {
       "type": "text"
     },
-    "Modus Operandi": {
-      "default": "",
+    "operandi": {
       "type": "text"
     },
-    "Main Activity's": {
-      "default": "",
+    "activity": {
       "type": "text"
     }
   }

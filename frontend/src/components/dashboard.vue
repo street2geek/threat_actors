@@ -3,24 +3,23 @@
         <div class="box header">
             <span>ADVANCED PERSISTANCE THREAT GROUPS</span>
         </div>
-        <Sidebar/>
+        <Sidebar :actors="threatactors"/>
         <div class="box inside">
             <div class="box description">Please select a playbook to begin.
             </div>
             <div class="box timeline"></div>
         </div>
         <div class="info">
-
+          
 
         </div>
         <div class="bottomheader">
-            <div class="recon">RECON</div>
-            <div class="weaponization">WEAPONIZATION</div>
-            <div class="delivery">DELIVERY</div>
-            <div class="exploit">EXPLOIT</div>
-            <div class="install">INSTALL</div>
-            <div class="command">COMMAND</div>
-            <div class="objective">OBJECTIVE</div>
+            <div id="severity">SEVERITY</div>
+            <div id="goal-orientation">GOAL ORIENTATION</div>
+            <div id="target">TARGET</div>
+            <div id="capability">CAPABILITY</div>
+            <div id="modus-operandi">MODUS OPERANDI</div>
+            <div id="main-activity">MAIN ACTIVITY'S</div>
         </div>
         <div class="phasescontainer">
 
@@ -29,14 +28,35 @@
 </template>
 
 <script>
-import Sidebar from "./Sidebar";
+import Sidebar from "./dashboard-sidebar";
+import { ALL_ACTORS_QUERY } from '@/graphql'
+
 export default {
   name: "dashboard",
   components: {
     Sidebar
   },
-  props: {
-    msg: String
+  data: () => {
+    return {
+      data: [],
+      threatactors: []
+    };
+  },
+  /*created() {
+    this.$http.get("http://localhost:1337/threatactors").then(
+      response => {
+        this.data = response.data;
+        this.threatactors = this.data.map(d => d.name);
+      },
+      error => {
+        console.error(error);
+      }
+    );
+  }*/
+  apollo: {
+    threatactors: {
+      query: ALL_ACTORS_QUERY
+    }
   }
 };
 </script>
@@ -65,7 +85,7 @@ table {
 
 .info {
   display: grid;
-  background-color: #74B842;
+  background-color: #74b842;
   color: #fff;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: 40px;
@@ -158,16 +178,11 @@ table {
   margin-bottom: 10px;
 }
 
-.recon,
-.delivery,
-.exploit,
-.install,
-.command,
-.objective,
-.weaponization {
+.bottomheader div {
   color: #95989a;
   padding: 20px 10px 10px;
   font-family: "Jura", sans-serif;
+  text-align: center;
 }
 
 .phasescontainer {

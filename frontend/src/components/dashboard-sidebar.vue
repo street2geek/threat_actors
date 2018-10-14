@@ -3,6 +3,7 @@
             <a href="https://researchcenter.paloaltonetworks.com/unit42/" target="_blank"> <img src='imgs/u42logo.png' alt=''></a>
             <span>ACTORS</span><br>
 
+            <div v-for="(actor, key) in actors" :key="key" class="btn playbook" :id="actor">{{actor.name}}</div>
             <div class="btn playbook" id="playbook_oilrig" pb_file="oilrig.json" onclick="">OILRIG</div>
             <div class="btn playbook" id="playbook_sofacy" pb_file="sofacy.json" onclick="">SOFACY</div>
             <div class="btn playbook" id="playbook_pickaxe" pb_file="pickaxe.json" onclick="">PICKAXE</div>
@@ -20,7 +21,8 @@
 
 <script>
 export default {
-  name: "sidebar"
+  name: "sidebar",
+  props: { actors: Array }
 };
 </script>
 
@@ -46,12 +48,12 @@ export default {
 }
 
 .btn:hover {
-  background:  #74B842;
+  background: #74b842;
   text-decoration: none;
 }
 
 .activebtn {
-  background:  #74B842;
+  background: #74b842;
   text-decoration: none;
 }
 </style>

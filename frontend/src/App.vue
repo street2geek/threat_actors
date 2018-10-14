@@ -1,11 +1,11 @@
 <template>
   <div id="app">
-    <Dashboard msg="Welcome to Your Vue.js App"/>
+    <Dashboard />
   </div>
 </template>
 
 <script>
-import Dashboard from "./components/Dashboard";
+import Dashboard from "./components/dashboard";
 
 export default {
   name: "app",
