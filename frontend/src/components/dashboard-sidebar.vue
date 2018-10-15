@@ -1,28 +1,31 @@
 <template>
-       <div class="box sidebar">
-            <a href="https://researchcenter.paloaltonetworks.com/unit42/" target="_blank"> <img src='imgs/u42logo.png' alt=''></a>
-            <span>ACTORS</span><br>
-
-            <div v-for="(actor, key) in actors" :key="key" class="btn playbook" :id="actor">{{actor.name}}</div>
-            <div class="btn playbook" id="playbook_oilrig" pb_file="oilrig.json" onclick="">OILRIG</div>
-            <div class="btn playbook" id="playbook_sofacy" pb_file="sofacy.json" onclick="">SOFACY</div>
-            <div class="btn playbook" id="playbook_pickaxe" pb_file="pickaxe.json" onclick="">PICKAXE</div>
-            <div class="btn playbook" id="playbook_patchwork" pb_file="patchwork.json" onclick="">PATCHWORK</div>
-            <div class="btn playbook" id="playbook_darkhydrus" pb_file="darkhydrus.json" onclick="">DARKHYDRUS</div>
-            <div class="btn playbook" id="playbook_reaper" pb_file="reaper.json" onclick="">REAPER</div>
-            <div class="btn playbook" id="playbook_rancor" pb_file="rancor.json" onclick="">RANCOR</div>
-            <div class="btn playbook" id="playbook_tick" pb_file="tick.json" onclick="">TICK</div>
-            <div class="btn playbook" id="playbook_dragonok" pb_file="dragonok.json" onclick="">DRAGONOK</div>
-
-            <!--<div class="btn playbook" id="playbook_name" pb_file="name.json" onclick="">NAME</div>-->
-
-        </div>
+  <div class="box sidebar">
+      <span>ACTORS</span><br>
+      <nav>
+        <div v-for="(actor, key) in threatactors" :key="key"  @click="setUrl(actor.slug)" class="btn playbook">{{actor.name.toUpperCase()}}</div>
+      </nav>
+    </div>
 </template>
 
 <script>
+import { ALL_ACTORS_QUERY } from "@/graphql";
+
 export default {
   name: "sidebar",
-  props: { actors: Array }
+  props: [],
+  data: () => ({
+    threatactors: []
+  }),
+  methods: {
+    setUrl(slug) {
+      this.$router.push({ query: { actor: slug} });
+    }
+  },
+  apollo: {
+    threatactors: {
+      query: ALL_ACTORS_QUERY
+    }
+  }
 };
 </script>
 
@@ -50,6 +53,7 @@ export default {
 .btn:hover {
   background: #74b842;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .activebtn {

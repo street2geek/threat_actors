@@ -72,7 +72,7 @@ The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://
 """
 scalar JSON
 
-union Morph = Threatactor | createThreatactorPayload | updateThreatactorPayload | deleteThreatactorPayload | ThreatactorConnection | ThreatactorAggregator | ThreatactorGroupBy | ThreatactorConnection_id | ThreatactorConnectionCreatedAt | ThreatactorConnectionUpdatedAt | ThreatactorConnectionName | ThreatactorConnectionSummary | ThreatactorConnectionSeverity | ThreatactorConnectionOrientation | ThreatactorConnectionTarget | ThreatactorConnectionCapability | ThreatactorConnectionOperandi | ThreatactorConnectionActivity | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileGroupBy | UploadFileConnection_id | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionHash | UploadFileConnectionSha256 | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionProvider | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnection_id | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnection_id | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole
+union Morph = Threatactor | createThreatactorPayload | updateThreatactorPayload | deleteThreatactorPayload | ThreatactorConnection | ThreatactorAggregator | ThreatactorGroupBy | ThreatactorConnection_id | ThreatactorConnectionCreatedAt | ThreatactorConnectionUpdatedAt | ThreatactorConnectionName | ThreatactorConnectionSummary | ThreatactorConnectionSeverity | ThreatactorConnectionOrientation | ThreatactorConnectionTarget | ThreatactorConnectionCapability | ThreatactorConnectionOperandi | ThreatactorConnectionActivity | ThreatactorConnectionSlug | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileGroupBy | UploadFileConnection_id | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionHash | UploadFileConnectionSha256 | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionProvider | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnection_id | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnection_id | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole
 
 type Mutation {
   createThreatactor(input: createThreatactorInput): createThreatactorPayload
@@ -123,7 +123,7 @@ type Threatactor {
   _id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  name: String
+  name: String!
   summary: String!
   severity: String
   orientation: String
@@ -131,6 +131,7 @@ type Threatactor {
   capability: String
   operandi: String
   activity: String
+  slug: String!
 }
 
 type ThreatactorAggregator {
@@ -183,6 +184,11 @@ type ThreatactorConnectionSeverity {
   connection: ThreatactorConnection
 }
 
+type ThreatactorConnectionSlug {
+  key: String
+  connection: ThreatactorConnection
+}
+
 type ThreatactorConnectionSummary {
   key: String
   connection: ThreatactorConnection
@@ -210,10 +216,11 @@ type ThreatactorGroupBy {
   capability: [ThreatactorConnectionCapability]
   operandi: [ThreatactorConnectionOperandi]
   activity: [ThreatactorConnectionActivity]
+  slug: [ThreatactorConnectionSlug]
 }
 
 input ThreatactorInput {
-  name: String
+  name: String!
   summary: String!
   severity: String
   orientation: String
@@ -221,6 +228,7 @@ input ThreatactorInput {
   capability: String
   operandi: String
   activity: String
+  slug: String!
 }
 
 input updateRoleInput {

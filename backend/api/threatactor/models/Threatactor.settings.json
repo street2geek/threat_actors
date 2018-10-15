@@ -10,7 +10,8 @@
   },
   "attributes": {
     "name": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "summary": {
       "type": "text",
@@ -33,6 +34,12 @@
     },
     "activity": {
       "type": "text"
+    },
+    "slug": {
+      "default": "",
+      "unique": true,
+      "type": "string",
+      "required": true
     }
   }
 }

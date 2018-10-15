@@ -3,9 +3,9 @@
         <div class="box header">
             <span>ADVANCED PERSISTANCE THREAT GROUPS</span>
         </div>
-        <Sidebar :actors="threatactors"/>
+        <Sidebar />
         <div class="box inside">
-            <div class="box description">Please select a playbook to begin.
+            <div class="box main-content">Please select a playbook to begin.
             </div>
             <div class="box timeline"></div>
         </div>
@@ -13,37 +13,32 @@
           
 
         </div>
-        <div class="bottomheader">
-            <div id="severity">SEVERITY</div>
-            <div id="goal-orientation">GOAL ORIENTATION</div>
-            <div id="target">TARGET</div>
-            <div id="capability">CAPABILITY</div>
-            <div id="modus-operandi">MODUS OPERANDI</div>
-            <div id="main-activity">MAIN ACTIVITY'S</div>
-        </div>
-        <div class="phasescontainer">
-
-        </div>
+        <nav class="sub-navigation">
+            <div @click="setMainContent" id="severity">SEVERITY</div>
+            <div @click="setMainContent" id="goal-orientation">GOAL ORIENTATION</div>
+            <div @click="setMainContent" id="target">TARGET</div>
+            <div @click="setMainContent" id="capability">CAPABILITY</div>
+            <div @click="setMainContent" id="modus-operandi">MODUS OPERANDI</div>
+            <div @click="setMainContent" id="main-activity">MAIN ACTIVITY'S</div>
+        </nav>
     </div>
 </template>
 
 <script>
 import Sidebar from "./dashboard-sidebar";
-import { ALL_ACTORS_QUERY } from "@/graphql";
 
 export default {
   name: "dashboard",
   components: {
     Sidebar
   },
-  data: () => {
-    return {
-      threatactors: []
-    };
-  },
+  data: () => ({
+    content: ''
+  }),
   methods: {
-    summary(name) {},
-    severity(name) {}
+    setMainContent(e) {
+      console.log(e.target.id);
+    }
   },
   /*created() {
     this.$http.get("http://localhost:1337/threatactors").then(
@@ -55,11 +50,6 @@ export default {
       }
     );
   }*/
-  apollo: {
-    threatactors: {
-      query: ALL_ACTORS_QUERY
-    }
-  }
 };
 </script>
 
@@ -104,15 +94,12 @@ table {
   font-weight: 600;
 }
 
-.description {
-  grid-area: description;
+.main-content {
+  grid-area: main-content;
   background-color: #7e7e7e;
   margin-top: 10px;
   font-size: 100%;
   padding: 20px;
-}
-
-.description {
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 }
@@ -166,12 +153,12 @@ table {
   display: grid;
   grid-template-columns: 65% auto;
   grid-template-rows: 1fr;
-  grid-template-areas: "description timeline";
+  grid-template-areas: "main-content timeline";
   grid-gap: 10px;
   margin-bottom: 10px;
 }
 
-.bottomheader {
+.sub-navigation {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: 50px;
@@ -180,33 +167,14 @@ table {
   margin-bottom: 10px;
 }
 
-.bottomheader div {
+.sub-navigation div {
   color: #95989a;
   padding: 20px 10px 10px;
   font-family: "Jura", sans-serif;
   text-align: center;
+  cursor: pointer;
 }
 
-.phasescontainer {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  grid-auto-rows: 100px;
-  grid-gap: 10px;
-  margin-top: 10px;
-}
-
-.phases {
-  background-color: #7e7e7e;
-  padding: 10px;
-}
-
-.phases:hover {
-  background: #ef9124;
-}
-
-.phasesblank {
-  background-color: #464646;
-}
 
 .box {
   color: #fff;
@@ -220,42 +188,6 @@ table {
   padding-top: 30px;
   font-size: 10px;
   background-color: #393939;
-}
-
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: black;
-  background-color: rgba(0, 0, 0, 0.4);
-}
-
-.modal-content {
-  background-color: #464646;
-  margin: 15% auto;
-  padding: 20px;
-  color: white;
-  border: 1px solid #888;
-  width: 80%;
-}
-
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
 }
 
 ::-webkit-scrollbar {
