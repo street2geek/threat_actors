@@ -58,16 +58,6 @@ export default {
         });
     }
   }
-  /*created() {
-    this.$http.get("http://localhost:1337/threatactors").then(
-      response => {
-        this.threatactors = this.data.map(d => d.name);
-      },
-      error => {
-        console.error(error);
-      }
-    );
-  }*/
 };
 </script>
 
