@@ -3,43 +3,61 @@
         <div class="box header">
             <span>ADVANCED PERSISTANCE THREAT GROUPS</span>
         </div>
-        <Sidebar />
+        <Sidebar @set-ctf="setContentTypeField" />
         <div class="box inside">
-            <div class="box main-content">Please select a playbook to begin.
+            <div class="box main-content">
+              {{content}}
             </div>
             <div class="box timeline"></div>
         </div>
         <div class="info">
           
-
         </div>
         <nav class="sub-navigation">
-            <div @click="setMainContent" id="severity">SEVERITY</div>
-            <div @click="setMainContent" id="goal-orientation">GOAL ORIENTATION</div>
-            <div @click="setMainContent" id="target">TARGET</div>
-            <div @click="setMainContent" id="capability">CAPABILITY</div>
-            <div @click="setMainContent" id="modus-operandi">MODUS OPERANDI</div>
-            <div @click="setMainContent" id="main-activity">MAIN ACTIVITY'S</div>
+            <div @click="setContentTypeField" id="severity">SEVERITY</div>
+            <div @click="setContentTypeField" id="orientation">GOAL ORIENTATION</div>
+            <div @click="setContentTypeField" id="target">TARGET</div>
+            <div @click="setContentTypeField" id="capability">CAPABILITY</div>
+            <div @click="setContentTypeField" id="operandi">MODUS OPERANDI</div>
+            <div @click="setContentTypeField" id="activity">MAIN ACTIVITY'S</div>
         </nav>
     </div>
 </template>
 
 <script>
 import Sidebar from "./dashboard-sidebar";
+import { ACTOR_CONTENT_QUERY } from "@/graphql";
 
 export default {
   name: "dashboard",
   components: {
     Sidebar
   },
+  props: ['to'],
   data: () => ({
-    content: ''
+    content: "Please select a playbook to begin.",
+    contentTypeField: ""
   }),
   methods: {
-    setMainContent(e) {
-      console.log(e.target.id);
+    setContentTypeField(e) {
+      this.contentTypeField = e ? e.target.id : "summary";
+      console.log(this.contentTypeField);
     }
   },
+  watch: {
+    contentTypeField() {
+      this.$apollo
+        .query({
+          query: ACTOR_CONTENT_QUERY,
+          variables: {
+            slug: this.$props.to
+          }
+        })
+        .then(response => {
+          this.content = response.data.threatactors[0][this.contentTypeField];
+        });
+    }
+  }
   /*created() {
     this.$http.get("http://localhost:1337/threatactors").then(
       response => {
@@ -174,7 +192,6 @@ table {
   text-align: center;
   cursor: pointer;
 }
-
 
 .box {
   color: #fff;

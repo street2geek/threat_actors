@@ -20,7 +20,7 @@ const router = new VueRouter({
       path: '*',
       component: Dashboard,
       props: (route) => ({
-          to: route.query.name,
+          to: route.query.actor,
       })
   }]
 });

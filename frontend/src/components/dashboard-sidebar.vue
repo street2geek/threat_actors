@@ -2,7 +2,7 @@
   <div class="box sidebar">
       <span>ACTORS</span><br>
       <nav>
-        <div v-for="(actor, key) in threatactors" :key="key"  @click="setUrl(actor.slug)" class="btn playbook">{{actor.name.toUpperCase()}}</div>
+        <div v-for="(actor, key) in threatactors" :key="key"  @click="passActorProps(actor.slug)" class="btn playbook">{{actor.name.toUpperCase()}}</div>
       </nav>
     </div>
 </template>
@@ -12,13 +12,18 @@ import { ALL_ACTORS_QUERY } from "@/graphql";
 
 export default {
   name: "sidebar",
-  props: [],
   data: () => ({
     threatactors: []
   }),
+  watch:{
+    threatactors(){
+      this.passActorProps(this.threatactors[0].slug);
+    }
+  },
   methods: {
-    setUrl(slug) {
+    passActorProps(slug) {
       this.$router.push({ query: { actor: slug} });
+      this.$emit('set-ctf');
     }
   },
   apollo: {
