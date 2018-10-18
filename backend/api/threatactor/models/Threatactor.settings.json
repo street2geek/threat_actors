@@ -40,6 +40,10 @@
       "unique": true,
       "type": "string",
       "required": true
+    },
+    "actor": {
+      "default": "",
+      "type": "text"
     }
   }
 }

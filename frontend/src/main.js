@@ -1,9 +1,9 @@
 import Vue from "vue";
-import VueRouter from 'vue-router'
-import VueResource from 'vue-resource'
+import VueRouter from "vue-router";
+import VueResource from "vue-resource";
 import "./registerServiceWorker";
 import "../node_modules/chota/dist/chota.css";
-import { createProvider } from './vue-apollo'
+import { createProvider } from "./vue-apollo";
 
 import App from "./App.vue";
 import Dashboard from "./components/dashboard.vue";
@@ -15,16 +15,17 @@ Vue.use(VueRouter);
 Router configuration
  */
 const router = new VueRouter({
-  mode: 'history',
-  routes: [{
-      path: '*',
+  mode: "history",
+  routes: [
+    {
+      path: "*",
       component: Dashboard,
-      props: (route) => ({
-          to: route.query.actor,
+      props: route => ({
+        to: route.query.actor
       })
-  }]
+    }
+  ]
 });
-
 
 new Vue({
   router,

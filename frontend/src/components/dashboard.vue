@@ -5,15 +5,12 @@
         </div>
         <Sidebar @set-ctf="setContentTypeField" />
         <div class="box inside">
-            <div class="box main-content">
-              {{content}}
-            </div>
+            <div class="box main-content" v-html="content"></div>
             <div class="box timeline"></div>
         </div>
-        <div class="info">
-          
-        </div>
+        <div class="info"></div>
         <nav class="sub-navigation">
+            <div @click="setContentTypeField" id="actor">THREAT ACTOR</div>
             <div @click="setContentTypeField" id="severity">SEVERITY</div>
             <div @click="setContentTypeField" id="orientation">GOAL ORIENTATION</div>
             <div @click="setContentTypeField" id="target">TARGET</div>
@@ -27,13 +24,15 @@
 <script>
 import Sidebar from "./dashboard-sidebar";
 import { ACTOR_CONTENT_QUERY } from "@/graphql";
+import Showdown from "showdown";
+const md = new Showdown.Converter();
 
 export default {
   name: "dashboard",
   components: {
     Sidebar
   },
-  props: ['to'],
+  props: ["to"],
   data: () => ({
     content: "Please select a playbook to begin.",
     contentTypeField: ""
@@ -54,7 +53,9 @@ export default {
           }
         })
         .then(response => {
-          this.content = response.data.threatactors[0][this.contentTypeField];
+          this.content = md.makeHtml(
+            response.data.threatactors[0][this.contentTypeField]
+          );
         });
     }
   }
