@@ -6,7 +6,9 @@
         <Sidebar @set-ctf="setContentTypeField" />
         <div class="box inside">
             <div class="box main-content" v-html="content"></div>
-            <div class="box timeline"></div>
+            <div class="box aside-content">
+              <button>Download Report</button>
+            </div>
         </div>
         <div class="info"></div>
         <nav class="sub-navigation">
@@ -113,8 +115,8 @@ table {
   -webkit-overflow-scrolling: touch;
 }
 
-.timeline {
-  grid-area: timeline;
+.aside-content {
+  grid-area: side-content;
   background-color: #7e7e7e;
   margin-top: 10px;
   padding: 20px;
@@ -162,7 +164,7 @@ table {
   display: grid;
   grid-template-columns: 65% auto;
   grid-template-rows: 1fr;
-  grid-template-areas: "main-content timeline";
+  grid-template-areas: "main-content side-content";
   grid-gap: 10px;
   margin-bottom: 10px;
 }
