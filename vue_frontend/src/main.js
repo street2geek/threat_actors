@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import VueResource from "vue-resource";
 import "./registerServiceWorker";
-import "../node_modules/chota/dist/chota.css";
+import "milligram";
 import { createProvider } from "./vue-apollo";
 
 import App from "./App.vue";

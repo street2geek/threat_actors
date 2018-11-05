@@ -2,12 +2,13 @@
       <div class="wrapper">
         <div class="box header">
             <span>ADVANCED PERSISTANCE THREAT GROUPS</span>
+             <button class="dl-report" @click="generateReport" >Download Report</button>
         </div>
         <Sidebar @set-ctf="setContentTypeField" />
         <div class="box inside">
-            <div class="box main-content" v-html="content"></div>
+            <div class="box main-content" v-html="contentToDisplay"></div>
             <div class="box aside-content">
-              <button>Download Report</button>
+
             </div>
         </div>
         <div class="info"></div>
@@ -23,10 +24,12 @@
     </div>
 </template>
 
-<script>
+<script>doc.Header.createParagraph("Header text");doc.Header.createParagraph("Header text");
 import Sidebar from "./dashboard-sidebar";
 import { ACTOR_CONTENT_QUERY } from "@/graphql";
 import Showdown from "showdown";
+import { gen } from "../utils/reportGen.js";
+
 const md = new Showdown.Converter();
 
 export default {
@@ -36,13 +39,26 @@ export default {
   },
   props: ["to"],
   data: () => ({
-    content: "Please select a playbook to begin.",
+    actorContent: "",
+    contentToDisplay: "Please select a playbook to begin.",
     contentTypeField: ""
   }),
   methods: {
     setContentTypeField(e) {
       this.contentTypeField = e ? e.target.id : "summary";
       console.log(this.contentTypeField);
+    },
+    generateReport() {
+      this.$apollo
+        .query({
+          query: ACTOR_CONTENT_QUERY,
+          variables: {
+            slug: this.$props.to
+          }
+        })
+        .then(({ data }) => {
+          gen(this.$props.to, data);
+        });
     }
   },
   watch: {
@@ -55,7 +71,8 @@ export default {
           }
         })
         .then(response => {
-          this.content = md.makeHtml(
+          console.log(response);
+          this.contentToDisplay = md.makeHtml(
             response.data.threatactors[0][this.contentTypeField]
           );
         });

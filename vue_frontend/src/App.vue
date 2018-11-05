@@ -16,7 +16,7 @@ body {
   background-color: #464646;
   font-size: 16px;
   font-family: "Rajdhani", sans-serif;
-  overflow-y: scroll;
+  overflow-y: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -42,4 +42,13 @@ a:active {
   color: white;
   text-decoration: none;
 }
+
+button{
+  cursor: pointer;
+}
+
+code{
+  background-color: #95989a;
+}
+
 </style>
