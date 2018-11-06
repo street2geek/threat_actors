@@ -2,17 +2,10 @@
       <div class="wrapper">
         <div class="box header">
             <span>ADVANCED PERSISTANCE THREAT GROUPS</span>
-             <button class="dl-report" @click="generateReport" >Download Report</button>
+             <button class="dl-report-btn" @click="generateReport" >Download Report</button>
         </div>
         <Sidebar @set-ctf="setContentTypeField" />
-        <div class="box inside">
-            <div class="box main-content" v-html="contentToDisplay"></div>
-            <div class="box aside-content">
-
-            </div>
-        </div>
-        <div class="info"></div>
-        <nav class="sub-navigation">
+         <nav class="sub-navigation">
             <div @click="setContentTypeField" id="actor">THREAT ACTOR</div>
             <div @click="setContentTypeField" id="severity">SEVERITY</div>
             <div @click="setContentTypeField" id="orientation">GOAL ORIENTATION</div>
@@ -21,14 +14,21 @@
             <div @click="setContentTypeField" id="operandi">MODUS OPERANDI</div>
             <div @click="setContentTypeField" id="activity">MAIN ACTIVITY'S</div>
         </nav>
+        <div class="box inside">
+            <div class="box main-content" v-html="contentToDisplay"></div>
+            <div class="box aside-content">
+
+            </div>
+        </div>
+        <div class="info"></div>
     </div>
 </template>
 
-<script>doc.Header.createParagraph("Header text");doc.Header.createParagraph("Header text");
+<script>
 import Sidebar from "./dashboard-sidebar";
 import { ACTOR_CONTENT_QUERY } from "@/graphql";
 import Showdown from "showdown";
-import { gen } from "../utils/reportGen.js";
+import gen from "../utils/reportGen.js";
 
 const md = new Showdown.Converter();
 
@@ -57,7 +57,7 @@ export default {
           }
         })
         .then(({ data }) => {
-          gen(this.$props.to, data);
+          gen.generate(this.$props.to, data);
         });
     }
   },
@@ -148,6 +148,11 @@ table {
   color: #95989a;
   align-self: flex-end;
   margin-bottom: 7px;
+  button {
+    position: absolute;
+    top: 16px;
+    right: 30px;
+  }
 }
 
 .header span {
@@ -161,19 +166,17 @@ table {
   grid-template-columns: 200px 1fr;
   grid-template-areas:
     "sidebar header"
+    "sidebar sub-navigation"
     "sidebar inside"
     "sidebar info"
-    "sidebar bottomheader"
-    "sidebar phasescontainer"
     "footer ...";
   color: #444;
   grid-template-rows:
     70px
-    350px
-    40px
     50px
-    1fr
-    70px;
+    550px
+    40px
+    1fr;
   grid-column-gap: 10px;
 }
 
@@ -190,7 +193,6 @@ table {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: 50px;
-  grid-template-areas: "recon weaponization delivery exploit install command objective";
   grid-gap: 10px;
   margin-bottom: 10px;
 }

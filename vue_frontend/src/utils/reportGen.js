@@ -1,91 +1,145 @@
 import * as docx from "docx";
+import saveAs from "file-saver";
+import marked from "marked";
 
-export function gen(slug, data) {
-  const name = slug.replace(/-/g, " ").toUpperCase();
+export default (function() {
+  function htmlEscapeToText(text) {
+    return text.replace(/\&\#[0-9]*;|&amp;/g, function(escapeCode) {
+      if (escapeCode.match(/amp/)) {
+        return "&";
+      }
 
-  const doc = new docx.Document();
-  doc.Header.createParagraph(name);
+      return String.fromCharCode(escapeCode.match(/[0-9]+/));
+    });
+  }
 
-  const summaryHead = new docx.Paragraph("Summary")
-    .heading2()
-    .left()
-    .pageBreak();
-  doc.addParagraph(summaryHead);
+  function renderPlain() {
+    var render = new marked.Renderer();
 
-  const summaryText = new docx.Paragraph(data.threatactors[0].summary).left();
-  doc.addParagraph(summaryText);
+    // render just the text of a link
+    render.link = function(href, title, text) {
+      return text;
+    };
 
-  const actorHead = new docx.Paragraph("Threat Actor")
-    .heading2()
-    .left()
-    .pageBreak();
-  doc.addParagraph(actorHead);
+    // render just the text of a paragraph
+    render.paragraph = function(text) {
+      return htmlEscapeToText(text) + "\r\n";
+    };
 
-  const actorText = new docx.Paragraph(data.threatactors[0].actor).left();
-  doc.addParagraph(actorText);
+    // render just the text of a heading element, but indecate level
+    render.heading = function(text, level) {
+      return level + " ) " + text;
+    };
 
-  const severityHead = new docx.Paragraph("Severity")
-    .heading2()
-    .left()
-    .pageBreak();
-  doc.addParagraph(severityHead);
+    // render nothing for images
+    render.image = function(href, title, text) {
+      return "";
+    };
 
-  const severityText = new docx.Paragraph(data.threatactors[0].severity).left();
-  doc.addParagraph(severityText);
+    return render;
+  }
 
-  const orientationHead = new docx.Paragraph("Goal Orientation")
-    .heading2()
-    .left()
-    .pageBreak();
-  doc.addParagraph(orientationHead);
+  function generate(slug, data) {
+    //console.log(marked(data.threatactors[0].summary));
+    const name = slug.replace(/-/g, " ").toUpperCase();
 
-  const orientationText = new docx.Paragraph(
-    data.threatactors[0].orientation
-  ).left();
-  doc.addParagraph(orientationText);
+    const doc = new docx.Document();
+    doc.Header.createParagraph(name);
 
-  const targetHead = new docx.Paragraph("Target")
-    .heading2()
-    .left()
-    .pageBreak();
-  doc.addParagraph(targetHead);
+    const summaryHead = new docx.Paragraph("Summary").heading2().left();
+    doc.addParagraph(summaryHead);
 
-  const targetText = new docx.Paragraph(data.threatactors[0].target).left();
-  doc.addParagraph(targetText);
+    const summaryText = new docx.Paragraph(
+      marked(data.threatactors[0].summary || "...", { renderer: renderPlain() })
+    ).left();
+    doc.addParagraph(summaryText);
 
-  const capabilityHead = new docx.Paragraph("Capability")
-    .heading2()
-    .left()
-    .pageBreak();
-  doc.addParagraph(capabilityHead);
+    const actorHead = new docx.Paragraph("Threat Actor").heading2().left();
 
-  const capabilityText = new docx.Paragraph(
-    data.threatactors[0].capability
-  ).left();
-  doc.addParagraph(capabilityText);
+    doc.addParagraph(actorHead);
 
-  const operandiHead = new docx.Paragraph("Modus Operandi")
-    .heading2()
-    .left()
-    .pageBreak();
-  doc.addParagraph(operandiHead);
+    const actorText = new docx.Paragraph(
+      marked(data.threatactors[0].actor || "...", { renderer: renderPlain() })
+    ).left();
+    doc.addParagraph(actorText);
 
-  const operandiText = new docx.Paragraph(data.threatactors[0].operandi).left();
-  doc.addParagraph(operandiText);
+    const severityHead = new docx.Paragraph("Severity").heading2().left();
 
-  const activityHead = new docx.Paragraph("Main Activities")
-    .heading2()
-    .left()
-    .pageBreak();
-  doc.addParagraph(activityHead);
+    doc.addParagraph(severityHead);
 
-  const activityText = new docx.Paragraph(data.threatactors[0].activity).left();
-  doc.addParagraph(activityText);
+    const severityText = new docx.Paragraph(
+      marked(data.threatactors[0].severity || "...", {
+        renderer: renderPlain()
+      })
+    ).left();
+    doc.addParagraph(severityText);
 
-  const packer = new docx.Packer();
+    const orientationHead = new docx.Paragraph("Goal Orientation")
+      .heading2()
+      .left();
 
-  packer.toBlob(doc).then(blob => {
-    // saveAs from FileSaver will download the file
-    saveAs(blob, `${slug}.docx`);
-  });
-}
+    doc.addParagraph(orientationHead);
+
+    const orientationText = new docx.Paragraph(
+      marked(data.threatactors[0].orientation || "...", {
+        renderer: renderPlain()
+      })
+    ).left();
+    doc.addParagraph(orientationText);
+
+    const targetHead = new docx.Paragraph("Target").heading2().left();
+
+    doc.addParagraph(targetHead);
+
+    const targetText = new docx.Paragraph(
+      marked(data.threatactors[0].target || "...", { renderer: renderPlain() })
+    ).left();
+    doc.addParagraph(targetText);
+
+    const capabilityHead = new docx.Paragraph("Capability").heading2().left();
+
+    doc.addParagraph(capabilityHead);
+
+    const capabilityText = new docx.Paragraph(
+      marked(data.threatactors[0].capability || "...", {
+        renderer: renderPlain()
+      })
+    ).left();
+    doc.addParagraph(capabilityText);
+
+    const operandiHead = new docx.Paragraph("Modus Operandi").heading2().left();
+
+    doc.addParagraph(operandiHead);
+
+    const operandiText = new docx.Paragraph(
+      marked(data.threatactors[0].operandi || "...", {
+        renderer: renderPlain()
+      })
+    ).left();
+    doc.addParagraph(operandiText);
+
+    const activityHead = new docx.Paragraph("Main Activities")
+      .heading2()
+      .left();
+
+    doc.addParagraph(activityHead);
+
+    const activityText = new docx.Paragraph(
+      marked(data.threatactors[0].activity || "...", {
+        renderer: renderPlain()
+      })
+    ).left();
+    doc.addParagraph(activityText);
+
+    const packer = new docx.Packer();
+
+    packer.toBlob(doc).then(blob => {
+      saveAs(blob, `${slug}.docx`);
+    });
+  }
+
+  return {
+    generate
+  };
+
+})();
