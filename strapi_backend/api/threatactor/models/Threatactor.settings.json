@@ -44,6 +44,10 @@
     "actor": {
       "default": "",
       "type": "text"
+    },
+    "newsposts": {
+      "collection": "newspost",
+      "via": "threatactor"
     }
   }
 }

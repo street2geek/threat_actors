@@ -1,0 +1,31 @@
+{
+  "connection": "default",
+  "collectionName": "",
+  "info": {
+    "name": "newspost",
+    "description": "Threat actor related news"
+  },
+  "options": {
+    "timestamps": true
+  },
+  "attributes": {
+    "Title": {
+      "default": "",
+      "type": "string",
+      "required": true
+    },
+    "Date": {
+      "default": "",
+      "type": "date"
+    },
+    "Post": {
+      "default": "",
+      "type": "text",
+      "required": true
+    },
+    "threatactor": {
+      "model": "threatactor",
+      "via": "newsposts"
+    }
+  }
+}

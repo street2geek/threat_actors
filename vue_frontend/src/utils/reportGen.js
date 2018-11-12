@@ -3,8 +3,9 @@ import saveAs from "file-saver";
 import marked from "marked";
 
 export default (function() {
+
   function htmlEscapeToText(text) {
-    return text.replace(/\&\#[0-9]*;|&amp;/g, function(escapeCode) {
+    return text.replace(/&#[0-9]*;|&amp;/g, function(escapeCode) {
       if (escapeCode.match(/amp/)) {
         return "&";
       }
@@ -29,11 +30,6 @@ export default (function() {
     // render just the text of a heading element, but indecate level
     render.heading = function(text, level) {
       return level + " ) " + text;
-    };
-
-    // render nothing for images
-    render.image = function(href, title, text) {
-      return "";
     };
 
     return render;
@@ -141,5 +137,4 @@ export default (function() {
   return {
     generate
   };
-
 })();

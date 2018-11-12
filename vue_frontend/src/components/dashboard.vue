@@ -6,13 +6,13 @@
         </div>
         <Sidebar @set-ctf="setContentTypeField" />
          <nav class="sub-navigation">
-            <div @click="setContentTypeField" id="actor">THREAT ACTOR</div>
-            <div @click="setContentTypeField" id="severity">SEVERITY</div>
-            <div @click="setContentTypeField" id="orientation">GOAL ORIENTATION</div>
-            <div @click="setContentTypeField" id="target">TARGET</div>
-            <div @click="setContentTypeField" id="capability">CAPABILITY</div>
-            <div @click="setContentTypeField" id="operandi">MODUS OPERANDI</div>
-            <div @click="setContentTypeField" id="activity">MAIN ACTIVITY'S</div>
+            <button class="button-outline" @click="setContentTypeField" id="actor">THREAT ACTOR</button>
+            <button class="button-outline" @click="setContentTypeField" id="severity">SEVERITY</button>
+            <button class="button-outline" @click="setContentTypeField" id="orientation">GOAL ORIENTATION</button>
+            <button class="button-outline" @click="setContentTypeField" id="target">TARGET</button>
+            <button class="button-outline" @click="setContentTypeField" id="capability">CAPABILITY</button>
+            <button class="button-outline" @click="setContentTypeField" id="operandi">MODUS OPERANDI</button>
+            <button class="button-outline" @click="setContentTypeField" id="activity">MAIN ACTIVITY'S</button>
         </nav>
         <div class="box inside">
             <div class="box main-content" v-html="contentToDisplay"></div>
@@ -71,7 +71,6 @@ export default {
           }
         })
         .then(response => {
-          console.log(response);
           this.contentToDisplay = md.makeHtml(
             response.data.threatactors[0][this.contentTypeField]
           );
@@ -151,7 +150,7 @@ table {
   button {
     position: absolute;
     top: 16px;
-    right: 30px;
+    right: 10px;
   }
 }
 
@@ -174,7 +173,7 @@ table {
   grid-template-rows:
     70px
     50px
-    550px
+    680px
     40px
     1fr;
   grid-column-gap: 10px;
@@ -195,15 +194,19 @@ table {
   grid-template-rows: 50px;
   grid-gap: 10px;
   margin-bottom: 10px;
+  padding-right: 10px;
+  button{
+    
+  }
 }
 
-.sub-navigation div {
+/* .sub-navigation div {
   color: #95989a;
   padding: 20px 10px 10px;
   font-family: "Jura", sans-serif;
   text-align: center;
   cursor: pointer;
-}
+} */
 
 .box {
   color: #fff;
