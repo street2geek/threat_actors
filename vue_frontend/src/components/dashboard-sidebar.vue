@@ -48,8 +48,6 @@ export default {
 .sidebar {
   grid-area: sidebar;
   background-color: #393939;
-  padding-left: 20px;
-  padding-right: 20px;
   padding-top: 20px;
   min-height: calc(100vh - 10px);
 }
@@ -57,12 +55,14 @@ export default {
 .sidebar span {
   color: #95989a;
   font-size: 12px;
+  padding-left: 20px; 
 }
 
 .btn {
   color: #ffffff;
   background: #393939;
   text-decoration: none;
+  padding-left: 20px; 
 }
 
 .btn:hover {

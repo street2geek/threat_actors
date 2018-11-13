@@ -2,7 +2,7 @@
       <div class="wrapper">
         <div class="box header">
             <span>ADVANCED PERSISTANCE THREAT GROUPS</span>
-             <button class="dl-report-btn" @click="generateReport" >Download Report</button>
+             <button class="dl-report-btn" @click="generateReport"> <svg class="lnr lnr-download"><use xlink:href="#lnr-download"></use></svg>&nbsp;&nbsp;&nbsp;Download Report</button>
         </div>
         <Sidebar @set-ctf="setContentTypeField" />
          <nav class="sub-navigation">
@@ -20,7 +20,7 @@
 
             </div>
         </div>
-        <div class="info"></div>
+        
     </div>
 </template>
 
@@ -93,16 +93,11 @@ td {
   padding: 10px;
 }
 
-.indicators {
-  font-size: 16px;
-  font-family: "Inconsolata", monospace;
-}
-
 table {
   width: 100%;
 }
 
-.info {
+/* .info {
   display: grid;
   background-color: #74b842;
   color: #fff;
@@ -111,7 +106,7 @@ table {
   grid-template-areas: "left middle middle2 right";
   justify-items: center;
   align-items: center;
-}
+} */
 
 .left span,
 .right span,
@@ -160,6 +155,20 @@ table {
   font-family: "Jura", sans-serif;
 }
 
+.lnr {
+  display: inline-block;
+  fill: currentColor;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.05em;
+}
+
+.lnr-download {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 12px;
+}
+
 .wrapper {
   display: grid;
   grid-template-columns: 200px 1fr;
@@ -195,9 +204,6 @@ table {
   grid-gap: 10px;
   margin-bottom: 10px;
   padding-right: 10px;
-  button{
-    
-  }
 }
 
 /* .sub-navigation div {
