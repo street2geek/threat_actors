@@ -2,7 +2,7 @@
   <div class="box sidebar">
       <span>ACTORS</span><br>
       <nav>
-        <div v-for="(actor, key) in threatactors" :key="key"  @click="passActorProps(actor.slug)" class="btn playbook">{{actor.name.toUpperCase()}}</div>
+        <div v-for="(actor, key) in threatactors" :key="key"  @click="setUrlQuery(actor.slug)" class="btn playbook">{{actor.name.toUpperCase()}}</div>
       </nav>
     </div>
 </template>
@@ -21,7 +21,7 @@ export default {
     }
   },
   methods: {
-    passActorProps(slug) {
+    setUrlQuery(slug) {
       this.$router.push({ query: { actor: slug} });
       this.$emit('set-ctf');
     }

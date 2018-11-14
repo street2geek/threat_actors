@@ -46,28 +46,26 @@ export default {
   methods: {
     setContentTypeField(e) {
       this.contentTypeField = e ? e.target.id : "summary";
-      console.log(this.contentTypeField);
+      this.displayContent();
     },
     generateReport() {
       this.$apollo
         .query({
           query: ACTOR_CONTENT_QUERY,
           variables: {
-            slug: this.$props.to
+            slug: this.$route.query.actor
           }
         })
         .then(({ data }) => {
-          gen.generate(this.$props.to, data);
+          gen.generate(this.$route.query.actor, data);
         });
-    }
-  },
-  watch: {
-    contentTypeField() {
+    },
+    displayContent() {
       this.$apollo
         .query({
           query: ACTOR_CONTENT_QUERY,
           variables: {
-            slug: this.$props.to
+            slug: this.$route.query.actor
           }
         })
         .then(response => {
