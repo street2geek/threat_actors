@@ -17,7 +17,7 @@ export default {
   }),
   watch:{
     threatactors(){
-      this.passActorProps(this.threatactors[0].slug);
+      this.setUrlQuery(this.threatactors[0].slug);
     }
   },
   methods: {
