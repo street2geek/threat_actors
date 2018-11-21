@@ -17,7 +17,10 @@
         <div class="box inside">
             <div class="box main-content" v-html="contentToDisplay"></div>
             <div class="box aside-content">
-
+              <article v-for="(post, key) in newsPosts" :key="key" class="post">
+                <h6>{{post.Title.toUpperCase()}}</h6>
+                <p>{{post.Post}}</p>
+              </article>
             </div>
         </div>
         
@@ -27,6 +30,7 @@
 <script>
 import Sidebar from "./dashboard-sidebar";
 import { ACTOR_CONTENT_QUERY } from "@/graphql";
+import { ACTOR_NEWSPOSTS_QUERY } from "@/graphql";
 import Showdown from "showdown";
 import gen from "../utils/reportGen.js";
 
@@ -40,9 +44,13 @@ export default {
   props: ["to"],
   data: () => ({
     actorContent: "",
-    contentToDisplay: "Please select a playbook to begin.",
-    contentTypeField: ""
+    contentToDisplay: "Loading...",
+    contentTypeField: "",
+    newsPosts: []
   }),
+  created() {
+    this.fetchNewsPosts();
+  },
   methods: {
     setContentTypeField(e) {
       this.contentTypeField = e ? e.target.id : "summary";
@@ -72,6 +80,19 @@ export default {
           this.contentToDisplay = md.makeHtml(
             response.data.threatactors[0][this.contentTypeField]
           );
+        });
+    },
+    fetchNewsPosts() {
+      this.$apollo
+        .query({
+          query: ACTOR_NEWSPOSTS_QUERY,
+          variables: {
+            slug: this.$route.query.actor
+          }
+        })
+        .then(response => {
+          this.newsPosts = response.data.threatactors[0].newsposts;
+          console.log(this.newsPosts)
         });
     }
   }

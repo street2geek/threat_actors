@@ -22,3 +22,15 @@ export const ACTOR_CONTENT_QUERY = gql`
     }
   }
 `;
+
+export const ACTOR_NEWSPOSTS_QUERY = gql`
+  query ActorContentQuery($slug: String!) {
+    threatactors(where: {slug_contains: $slug}) {
+      newsposts{
+        Title
+        Date
+        Post
+      }
+    }
+  }
+`;
