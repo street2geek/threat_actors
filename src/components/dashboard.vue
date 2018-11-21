@@ -30,7 +30,6 @@
 <script>
 import Sidebar from "./dashboard-sidebar";
 import { ACTOR_CONTENT_QUERY } from "@/graphql";
-import { ACTOR_NEWSPOSTS_QUERY } from "@/graphql";
 import Showdown from "showdown";
 import gen from "../utils/reportGen.js";
 
@@ -43,7 +42,6 @@ export default {
   },
   props: ["to"],
   data: () => ({
-    actorContent: "",
     contentToDisplay: "Loading...",
     contentTypeField: "",
     newsPosts: []
@@ -80,19 +78,7 @@ export default {
           this.contentToDisplay = md.makeHtml(
             response.data.threatactors[0][this.contentTypeField]
           );
-        });
-    },
-    fetchNewsPosts() {
-      this.$apollo
-        .query({
-          query: ACTOR_NEWSPOSTS_QUERY,
-          variables: {
-            slug: this.$route.query.actor
-          }
-        })
-        .then(response => {
           this.newsPosts = response.data.threatactors[0].newsposts;
-          console.log(this.newsPosts)
         });
     }
   }

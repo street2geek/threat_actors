@@ -19,6 +19,11 @@ export const ACTOR_CONTENT_QUERY = gql`
       capability
       operandi
       activity
+      newsposts{
+        Title
+        Date
+        Post
+      }
     }
   }
 `;
