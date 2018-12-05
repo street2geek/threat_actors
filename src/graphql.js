@@ -23,6 +23,7 @@ export const ACTOR_CONTENT_QUERY = gql`
         Title
         Date
         Post
+        Url
       }
     }
   }
@@ -35,6 +36,7 @@ export const ACTOR_NEWSPOSTS_QUERY = gql`
         Title
         Date
         Post
+        Url
       }
     }
   }

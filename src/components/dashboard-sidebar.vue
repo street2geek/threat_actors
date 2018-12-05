@@ -2,7 +2,7 @@
   <div class="box sidebar">
       <span>ACTORS</span><br>
       <nav>
-        <div v-for="(actor, key) in threatactors" :key="key"  @click="setUrlQuery(actor.slug)" class="btn playbook">{{actor.name.toUpperCase()}}</div>
+        <div v-for="(actor, key) in threatactors" :key="key"  @click="setUrlQuery(actor.slug)" :class="{active: actor.slug == $route.query.actor}" class="btn playbook">{{actor.name.toUpperCase()}}</div>
       </nav>
     </div>
 </template>
@@ -15,15 +15,15 @@ export default {
   data: () => ({
     threatactors: []
   }),
-  watch:{
-    threatactors(){
+  watch: {
+    threatactors() {
       this.setUrlQuery(this.threatactors[0].slug);
     }
   },
   methods: {
     setUrlQuery(slug) {
-      this.$router.push({ query: { actor: slug} });
-      this.$emit('set-ctf');
+      this.$router.push({ query: { actor: slug } });
+      this.$emit("set-ctf");
     }
   },
   apollo: {
@@ -31,7 +31,7 @@ export default {
       query: ALL_ACTORS_QUERY
     }
   }
-   /*created() {
+  /*created() {
     this.$http.get("http://localhost:1337/threatactors").then(
       response => {
         this.threatactors = this.data.map(d => ({name:d.name, slug: d.slug}));
@@ -55,14 +55,14 @@ export default {
 .sidebar span {
   color: #95989a;
   font-size: 12px;
-  padding-left: 20px; 
+  padding-left: 20px;
 }
 
 .btn {
   color: #ffffff;
   background: #393939;
   text-decoration: none;
-  padding-left: 20px; 
+  padding-left: 20px;
 }
 
 .btn:hover {
@@ -71,8 +71,9 @@ export default {
   cursor: pointer;
 }
 
-.activebtn {
+.active {
   background: #74b842;
+  opacity: 0.5;
   text-decoration: none;
 }
 </style>

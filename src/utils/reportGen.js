@@ -3,7 +3,6 @@ import saveAs from "file-saver";
 import marked from "marked";
 
 export default (function() {
-
   function htmlEscapeToText(text) {
     return text.replace(/&#[0-9]*;|&amp;/g, function(escapeCode) {
       if (escapeCode.match(/amp/)) {
@@ -30,6 +29,18 @@ export default (function() {
     // render just the text of a heading element, but indecate level
     render.heading = function(text, level) {
       return level + " ) " + text;
+    };
+
+    render.br = function() {
+      return "\r\n";
+    };
+
+    render.code = function(code) {
+      return "\n\n" + code + "\n\n";
+    };
+
+    render.strong = function(text) {
+      return text;
     };
 
     return render;

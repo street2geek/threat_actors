@@ -6,20 +6,20 @@
         </div>
         <Sidebar @set-ctf="setContentTypeField" />
          <nav class="sub-navigation">
-            <button class="button-outline" @click="setContentTypeField" id="actor">THREAT ACTOR</button>
-            <button class="button-outline" @click="setContentTypeField" id="severity">SEVERITY</button>
-            <button class="button-outline" @click="setContentTypeField" id="orientation">GOAL ORIENTATION</button>
-            <button class="button-outline" @click="setContentTypeField" id="target">TARGET</button>
-            <button class="button-outline" @click="setContentTypeField" id="capability">CAPABILITY</button>
-            <button class="button-outline" @click="setContentTypeField" id="operandi">MODUS OPERANDI</button>
-            <button class="button-outline" @click="setContentTypeField" id="activity">MAIN ACTIVITY'S</button>
+            <button class="button-outline" :class="{active: contentTypeField == 'actor' }" @click="setContentTypeField" id="actor">THREAT ACTOR</button>
+            <button class="button-outline" :class="{active: contentTypeField == 'severity' }" @click="setContentTypeField" id="severity">SEVERITY</button>
+            <button class="button-outline" :class="{active: contentTypeField == 'orientation' }" @click="setContentTypeField" id="orientation">GOAL ORIENTATION</button>
+            <button class="button-outline" :class="{active: contentTypeField == 'target' }" @click="setContentTypeField" id="target">TARGET</button>
+            <button class="button-outline" :class="{active: contentTypeField == 'capability' }" @click="setContentTypeField" id="capability">CAPABILITY</button>
+            <button class="button-outline" :class="{active: contentTypeField == 'operandi' }" @click="setContentTypeField" id="operandi">MODUS OPERANDI</button>
+            <button class="button-outline" :class="{active: contentTypeField == 'activity' }" @click="setContentTypeField" id="activity">MAIN ACTIVITY'S</button>
         </nav>
         <div class="box inside">
             <div class="box main-content" v-html="contentToDisplay"></div>
             <div class="box aside-content">
               <article v-for="(post, key) in newsPosts" :key="key" class="post">
-                <h6>{{post.Title.toUpperCase()}}</h6>
-                <p>{{post.Post}}</p>
+                <h6 v-html="$marked(post.Title.toUpperCase())"></h6>
+                <a href="post.Url" v-html="$marked(post.Post)"></a>
               </article>
             </div>
         </div>
@@ -30,10 +30,7 @@
 <script>
 import Sidebar from "./dashboard-sidebar";
 import { ACTOR_CONTENT_QUERY } from "@/graphql";
-import Showdown from "showdown";
 import gen from "../utils/reportGen.js";
-
-const md = new Showdown.Converter();
 
 export default {
   name: "dashboard",
@@ -46,9 +43,6 @@ export default {
     contentTypeField: "",
     newsPosts: []
   }),
-  created() {
-    this.fetchNewsPosts();
-  },
   methods: {
     setContentTypeField(e) {
       this.contentTypeField = e ? e.target.id : "summary";
@@ -75,7 +69,7 @@ export default {
           }
         })
         .then(response => {
-          this.contentToDisplay = md.makeHtml(
+          this.contentToDisplay = this.$marked(
             response.data.threatactors[0][this.contentTypeField]
           );
           this.newsPosts = response.data.threatactors[0].newsposts;
@@ -136,7 +130,12 @@ table {
   background-color: #7e7e7e;
   margin-top: 10px;
   padding: 20px;
-  text-align: center;
+  text-align: left;
+  .post {
+    h6{
+      margin-bottom: 0;
+    }
+  }
 }
 
 .header {
@@ -209,6 +208,10 @@ table {
   grid-gap: 10px;
   margin-bottom: 10px;
   padding-right: 10px;
+  button.active {
+    border-color: #74b842;
+    color: #74b842;
+  }
 }
 
 /* .sub-navigation div {
