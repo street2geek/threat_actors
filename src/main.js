@@ -6,7 +6,6 @@ import "milligram";
 import { createProvider } from "./vue-apollo";
 import marked from "marked";
 
-
 import App from "./App.vue";
 import Dashboard from "./components/dashboard.vue";
 import Login from "./components/login.vue";
@@ -26,13 +25,31 @@ const router = new VueRouter({
       component: Dashboard,
       props: route => ({
         to: route.query.actor
-      })
+      }),
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: "/login",
       component: Login
     }
   ]
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (localStorage.getItem("jwtTokenTad") == null) {
+      next({
+        path: "/login",
+        query: { redirect: to.fullPath }
+      });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
 });
 
 new Vue({
