@@ -2,7 +2,10 @@
       <div class="wrapper">
         <div class="box header">
             <span>ADVANCED PERSISTANCE THREAT GROUPS</span>
-             <button class="dl-report-btn" @click="generateReport"> <svg class="lnr lnr-download"><use xlink:href="#lnr-download"></use></svg>&nbsp;&nbsp;&nbsp;Download Report</button>
+            <div class="loggedin">
+              <a href="" class="logout">Logout</a>
+              <p class="username"> {{username}}</p>
+            </div>
         </div>
         <Sidebar @set-ctf="setContentTypeField" />
          <nav class="sub-navigation">
@@ -13,6 +16,7 @@
             <button class="button-outline" :class="{active: contentTypeField == 'capability' }" @click="setContentTypeField" id="capability">CAPABILITY</button>
             <button class="button-outline" :class="{active: contentTypeField == 'operandi' }" @click="setContentTypeField" id="operandi">MODUS OPERANDI</button>
             <button class="button-outline" :class="{active: contentTypeField == 'activity' }" @click="setContentTypeField" id="activity">MAIN ACTIVITY'S</button>
+            <button class="dl-report-btn" @click="generateReport"> <svg class="lnr lnr-download"><use xlink:href="#lnr-download"></use></svg>&nbsp;&nbsp;&nbsp;Download Report</button>
         </nav>
         <div class="box inside">
             <div class="box main-content" v-html="contentToDisplay"></div>
@@ -41,7 +45,8 @@ export default {
   data: () => ({
     contentToDisplay: "Loading...",
     contentTypeField: "",
-    newsPosts: []
+    newsPosts: [],
+    username: localStorage.getItem("username")
   }),
   methods: {
     setContentTypeField(e) {
@@ -129,6 +134,7 @@ table {
   grid-area: side-content;
   background-color: #7e7e7e;
   margin-top: 10px;
+  margin-right: 10px;
   padding: 20px;
   text-align: left;
   .post {
@@ -146,10 +152,21 @@ table {
   color: #95989a;
   align-self: flex-end;
   margin-bottom: 7px;
-  button {
+  .loggedin {
     position: absolute;
-    top: 16px;
+    top: 5px;
     right: 10px;
+    text-align: right;
+    p, a{
+      margin: 0;
+      font-size: 14px;
+    }
+    a{
+      color: greenyellow;
+    }
+    p{
+      color: grey;
+    }
   }
 }
 
@@ -179,15 +196,13 @@ table {
   grid-template-areas:
     "sidebar header"
     "sidebar sub-navigation"
-    "sidebar inside"
     "sidebar info"
     "footer ...";
   color: #444;
   grid-template-rows:
     70px
     50px
-    680px
-    40px
+    85vh
     1fr;
   grid-column-gap: 10px;
 }
@@ -198,12 +213,11 @@ table {
   grid-template-rows: 1fr;
   grid-template-areas: "main-content side-content";
   grid-gap: 10px;
-  margin-bottom: 10px;
 }
 
 .sub-navigation {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(8, 1fr);
   grid-template-rows: 50px;
   grid-gap: 10px;
   margin-bottom: 10px;

@@ -22,9 +22,8 @@ export default {
   }),
   methods: {
     formSubmit() {
-      console.log(this.username, this.pword);
       this.$http
-        .post("http://95.179.200.210:8080/auth/local", {
+        .post("http://95.179.200.210/auth/local", {
           identifier: this.username,
           password: this.pword
         })
@@ -32,11 +31,13 @@ export default {
           response => {
             console.log("User Token: ", response.data.jwt);
             localStorage.setItem("jwtTokenTad", response.data.jwt);
+            localStorage.setItem("username", response.data.user.username);
             this.$router.push("/");
           },
           error => {
             console.error(error);
             localStorage.removeItem("jwtTokenTad");
+            localStorage.removeItem("username");
           }
         );
     }

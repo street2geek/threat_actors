@@ -7,11 +7,11 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 Vue.use(VueApollo)
 
 // Name of the localStorage item
-const AUTH_TOKEN = 'apollo-token'
+const AUTH_TOKEN = 'jwtTokenTad'
 
 // Http endpoint
 //const httpEndpoint = process.env.VUE_APP_GRAPHQL_HTTP || 'http://localhost:1337/graphql'
-const httpEndpoint = process.env.VUE_APP_GRAPHQL_HTTP || 'http://95.179.200.210:8080/graphql'
+const httpEndpoint = process.env.VUE_APP_GRAPHQL_HTTP || 'http://95.179.200.210/graphql'
 
 // Files URL root
 export const filesRoot = process.env.VUE_APP_FILES_ROOT || httpEndpoint.substr(0, httpEndpoint.indexOf('/graphql'))
